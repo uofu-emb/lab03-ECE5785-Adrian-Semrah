@@ -41,6 +41,9 @@ set(PICO_BOARD pico_w CACHE STRING "Board type")
 # This imports the Pico SDK (must be included before the project)
 include(${PICO_SDK_PATH}/pico_sdk_init.cmake)
 
+# This imports the library configuration for FreeRTOS
+include(lib/freertos/portable/ThirdParty/GCC/RP2040/FreeRTOS_Kernel_import.cmake)
+
 # This defines your project name, you can name it anything you want.
 project(myproject C CXX ASM)
 
