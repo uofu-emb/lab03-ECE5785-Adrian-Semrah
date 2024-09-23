@@ -65,5 +65,5 @@ include_directories(${CMAKE_CURRENT_LIST_DIR}/include)
 add_subdirectory(src)
 
 # The test configuration is inside the test directory.
-# include(CTest)
+include(CTest)
 add_subdirectory(test)
