@@ -8,21 +8,21 @@
 #include <pico/multicore.h>
 #include <pico/cyw43_arch.h>
 
-void big_increment_print(SemaphoreHandle_t semaphore, int counter)
+void big_increment_print(SemaphoreHandle_t semaphore, int* counter)
 {
     xSemaphoreTake(semaphore, portMAX_DELAY);
     {
-        counter += counter + 1;
-        printf("hello world from %s! Count %d\n", "thread", counter);
+        *counter += *counter + 1;
+        printf("hello world from %s! Count %d\n", "thread", *counter);
     }
     xSemaphoreGive(semaphore);
 }
 
-void increment_print(SemaphoreHandle_t semaphore, int counter)
+void increment_print(SemaphoreHandle_t semaphore, int* counter)
 {
     xSemaphoreTake(semaphore, portMAX_DELAY);
     {
-        printf("hello world from %s! Count %d\n", "main", counter++);
+        printf("hello world from %s! Count %d\n", "main", (*counter)++);
     }
     xSemaphoreGive(semaphore);
 }

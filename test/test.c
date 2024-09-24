@@ -20,13 +20,14 @@ void test_big_increment_print()
 
     SemaphoreHandle_t semaphore = xSemaphoreCreateCounting(1, 1);
 
-    big_increment_print(semaphore, counter);
+    big_increment_print(semaphore, &counter);
+    printf("Counter: %d\n", counter);
     TEST_ASSERT_TRUE_MESSAGE(counter == 1, "Big increment print failed at 0");
 
-    big_increment_print(semaphore, counter);
+    big_increment_print(semaphore, &counter);
     TEST_ASSERT_TRUE_MESSAGE(counter == 3, "Big increment print failed at 1");
 
-    big_increment_print(semaphore, counter);
+    big_increment_print(semaphore, &counter);
     TEST_ASSERT_TRUE_MESSAGE(counter == 7, "Big increment print failed at 2");
 }
 
@@ -36,13 +37,13 @@ void test_increment_print()
 
     SemaphoreHandle_t semaphore = xSemaphoreCreateCounting(1, 1);
 
-    increment_print(semaphore, counter);
+    increment_print(semaphore, &counter);
     TEST_ASSERT_TRUE_MESSAGE(counter == 1, "Increment print failed at 0");
 
-    increment_print(semaphore, counter);
+    increment_print(semaphore, &counter);
     TEST_ASSERT_TRUE_MESSAGE(counter == 2, "Increment print failed at 1");
 
-    increment_print(semaphore, counter);
+    increment_print(semaphore, &counter);
     TEST_ASSERT_TRUE_MESSAGE(counter == 3, "Increment print failed at 2");
 }
 
