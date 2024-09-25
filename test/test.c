@@ -10,6 +10,9 @@
 
 #include "threads_functions.h"
 
+#define SIDE_TASK_PRIORITY      ( tskIDLE_PRIORITY + 1UL )
+#define SIDE_TASK_STACK_SIZE configMINIMAL_STACK_SIZE
+
 void setUp(void) {}
 
 void tearDown(void) {}
@@ -47,7 +50,27 @@ void test_increment_print()
     TEST_ASSERT_TRUE_MESSAGE(counter == 3, "Increment print failed at 2");
 }
 
+void test_deadlock()
+{
+    SemaphoreHandle_t semaphore_a, semaphore_b;
+    TaskHandle_t test_thread_a, test_thread_b;
 
+    semaphore_a = xSemaphoreCreateCounting(1, 1);
+    semaphore_b = xSemaphoreCreateCounting(1, 1);
+
+    char *thread_a_name = "Test Thread A";
+    char *thread_b_name = "Test Thread B";
+
+    semaphores_t deadlock_semaphores_a = {semaphore_a, semaphore_b, thread_a_name};        
+    semaphores_t deadlock_semaphores_b = {semaphore_b, semaphore_a, thread_b_name};     
+
+    xTaskCreate(thread_lock, "test thread a",
+                SIDE_TASK_STACK_SIZE, &deadlock_semaphores_a, SIDE_TASK_PRIORITY, &test_thread_a);
+    xTaskCreate(thread_lock, "test thread b",
+                SIDE_TASK_STACK_SIZE, &deadlock_semaphores_b, SIDE_TASK_PRIORITY, &test_thread_b);            
+
+    vTaskStartScheduler();
+}
 
 int main (void)
 {

@@ -1,3 +1,4 @@
+# ====================================================================================
 # == DO NEVER EDIT THE NEXT LINES for Raspberry Pi Pico VS Code Extension to work ==
 if(WIN32)
     set(USERHOME $ENV{USERPROFILE})
@@ -11,16 +12,7 @@ set(picoVscode ${USERHOME}/.pico-sdk/cmake/pico-vscode.cmake)
 if (EXISTS ${picoVscode})
     include(${picoVscode})
 endif()
-# ====================================================================================
-# == DO NEVER EDIT THE NEXT LINES for Raspberry Pi Pico VS Code Extension to work ==
-if(WIN32)
-    set(USERHOME $ENV{USERPROFILE})
-else()
-    set(USERHOME $ENV{HOME})
-endif()
-set(sdkVersion 2.0.0)
-set(toolchainVersion 13_2_Rel1)
-set(picotoolVersion 2.0.0)
+
 if(EXISTS ${USERHOME}/.pico-sdk/cmake/pico-vscode.cmake)
     include(${USERHOME}/.pico-sdk/cmake/pico-vscode.cmake)
 elseif(DEFINED ENV{PICO_SDK_PATH})
@@ -28,6 +20,19 @@ elseif(DEFINED ENV{PICO_SDK_PATH})
 else()
     set(PICO_SDK_PATH lib/pico-sdk)
 endif()
+
+if(DEFINED ENV{FREERTOS_PATH})
+    set(FREERTOS_PATH $ENV{FREERTOS_PATH})
+else()
+    set(FREERTOS_PATH lib/freertos)
+endif()
+
+if(DEFINED ENV{UNITY_PATH})
+    set(UNITY_PATH $ENV{UNITY_PATH})
+else()
+    set(UNITY_PATH lib/unity)
+endif()
+
 # ====================================================================================
 cmake_minimum_required(VERSION 3.13)
 
