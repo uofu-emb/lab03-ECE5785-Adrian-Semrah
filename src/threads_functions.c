@@ -14,24 +14,24 @@ void thread_lock(void *params)
 {
     semaphores_t semaphore_deadlock = *((semaphores_t*) params);
 
-    printf("Attempting to take Semaphore A in Thread: %s", semaphore_deadlock.thread_name);
+    printf("Attempting to take Semaphore A in Thread: %s\n", semaphore_deadlock.thread_name);
     xSemaphoreTake(semaphore_deadlock.a, portMAX_DELAY);
     {   
-        printf("Took Semaphore A in Thread: %s", semaphore_deadlock.thread_name);
+        printf("Took Semaphore A in Thread: %s\n", semaphore_deadlock.thread_name);
         vTaskDelay(1000);
-        printf("Attempting to take Semaphore B in Thread: %s", semaphore_deadlock.thread_name);
+        
+        printf("Attempting to take Semaphore B in Thread: %s\n", semaphore_deadlock.thread_name);
         xSemaphoreTake(semaphore_deadlock.b, portMAX_DELAY);
             {
-                printf("Took Semaphore B in Thread: %s", semaphore_deadlock.thread_name);
-                vTaskDelay(1000);
+                printf("Took Semaphore B in Thread: %s\n", semaphore_deadlock.thread_name);
             }
         xSemaphoreGive(semaphore_deadlock.b);
-        printf("Released Semaphore B in Thread: %s", semaphore_deadlock.thread_name);
+        printf("Released Semaphore B in Thread: %s\n", semaphore_deadlock.thread_name);
 
         vTaskDelay(1000);
     }
     xSemaphoreGive(semaphore_deadlock.a);
-    printf("Released Semaphore A in Thread: %s", semaphore_deadlock.thread_name);
+    printf("Released Semaphore A in Thread: %s\n", semaphore_deadlock.thread_name);
 }
 
 void big_increment_print(SemaphoreHandle_t semaphore, int* counter)
