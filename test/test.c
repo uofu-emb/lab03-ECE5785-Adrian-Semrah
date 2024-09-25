@@ -81,6 +81,7 @@ int main (void)
     UNITY_BEGIN();
     RUN_TEST(test_big_increment_print);
     RUN_TEST(test_increment_print);
+    RUN_TEST(test_deadlock);
 
     sleep_ms(5000);
 
