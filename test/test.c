@@ -70,6 +70,20 @@ void test_deadlock()
                 SIDE_TASK_STACK_SIZE, &deadlock_semaphores_b, SIDE_TASK_PRIORITY, &test_thread_b);            
 
     vTaskStartScheduler();
+
+    vTaskDelay(5000);
+
+    vTaskSuspend(test_thread_a);
+    vTaskSuspend(test_thread_b);
+
+    TEST_ASSERT_TRUE_MESSAGE(eTaskGetState(test_thread_a) == eBlocked, "Thread A did not block corretly");
+    TEST_ASSERT_TRUE_MESSAGE(eTaskGetState(test_thread_b) == eBlocked, "Thread B did not block correctly");
+
+    TEST_ASSERT_EQUAL_INT(uxSemaphoreGetCount(&deadlock_semaphores_a), 0);
+    TEST_ASSERT_EQUAL_INT(uxSemaphoreGetCount(&deadlock_semaphores_b), 0);
+
+    vTaskDelete(test_thread_a);
+    vTaskDelete(test_thread_b);
 }
 
 int main (void)

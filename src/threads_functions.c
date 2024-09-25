@@ -18,7 +18,7 @@ void thread_lock(void *params)
     xSemaphoreTake(semaphore_deadlock.a, portMAX_DELAY);
     {   
         printf("Took Semaphore A in Thread: %s", semaphore_deadlock.thread_name);
-
+        vTaskDelay(1000);
         printf("Attempting to take Semaphore B in Thread: %s", semaphore_deadlock.thread_name);
         xSemaphoreTake(semaphore_deadlock.b, portMAX_DELAY);
             {
