@@ -14,7 +14,18 @@ typedef struct
     char *thread_name;
 } semaphores_t;
 
+typedef struct 
+{
+    SemaphoreHandle_t a;
+    int *counter;
+} orphaned_t;
+
+
 void thread_lock(void *params);
+
+void thread_orphaned(void *params);
+
+void thread_orphaned_fixed(void *params);
 
 void big_increment_print(SemaphoreHandle_t semaphore, int* counter);
 
